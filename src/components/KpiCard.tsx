@@ -1,4 +1,4 @@
-﻿import { motion } from "framer-motion";
+import { motion } from "framer-motion";
 import clsx from "clsx";
 
 interface KpiCardProps {
@@ -16,10 +16,12 @@ export const KpiCard = ({ label, value, trend, tone }: KpiCardProps) => (
     transition={{ duration: 0.35 }}
   >
     <span className="kpi-card__label">{label}</span>
-    <strong className="kpi-card__value">{value}</strong>
-    <span className={clsx("kpi-card__trend", { "is-negative": trend < 0 })}>
-      {trend >= 0 ? "+" : ""}
-      {trend.toFixed(1)}%
-    </span>
+    <div className="kpi-card__value-wrap">
+      <strong className="kpi-card__value">{value}</strong>
+      <span className={clsx("kpi-card__trend", { "is-negative": trend < 0 })}>
+        {trend >= 0 ? "+" : ""}
+        {trend.toFixed(1)}%
+      </span>
+    </div>
   </motion.article>
 );

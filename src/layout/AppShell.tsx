@@ -1,6 +1,9 @@
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import { motion } from "framer-motion";
+import { Icon } from "../components/Icon";
 import { ScopeControls } from "../components/ScopeControls";
+import { ThemeToggle } from "../components/ThemeToggle";
 import { useAppContext } from "../context/AppContext";
 
 const navItems = [
@@ -9,17 +12,26 @@ const navItems = [
   { to: "/inventory", label: "Inventory" },
   { to: "/menu", label: "Menu Lab" },
   { to: "/labor", label: "Labor" },
+  { to: "/catering", label: "Catering" },
+  { to: "/reports", label: "Reports" },
 ];
 
 export const AppShell = () => {
-  const {
-    data,
-    effectiveScope,
-    availableBusinesses,
-    availableLocations,
-    lastSavedAt,
-    resetOfflineData,
-  } = useAppContext();
+  const { data, effectiveScope, availableBusinesses, availableLocations } = useAppContext();
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const navRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setIsNavOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const scopeLabel =
     effectiveScope.locationId !== "all"
@@ -30,48 +42,57 @@ export const AppShell = () => {
 
   return (
     <div className="app-shell">
-      <aside className="sidebar">
-        <div className="sidebar__brand">
-          <span className="sidebar__brand-mark">GC</span>
-          <div>
-            <strong>{data.portfolio.name}</strong>
-            <p>{data.portfolio.headquarters}</p>
-          </div>
+      <header className="floating-nav-bar">
+        <div className="nav-brand-group" ref={navRef}>
+          <button
+            className={`brand-popout-trigger ${isNavOpen ? "is-active" : ""}`}
+            onClick={() => setIsNavOpen((current) => !current)}
+            aria-label="Toggle context scope"
+          >
+            <span className="brand-mark-bubble">GC</span>
+            <div className="brand-text">
+              <strong>{scopeLabel}</strong>
+              <p>{data.portfolio.headquarters}</p>
+            </div>
+            <span className={`chevron ${isNavOpen ? "is-open" : ""}`}>
+              <Icon name="chevronDown" width={16} height={16} />
+            </span>
+          </button>
+
+          <AnimatePresence>
+            {isNavOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className="popout-scope-controls"
+              >
+                <ScopeControls />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-        <nav className="sidebar__nav">
+
+        <nav className="bubble-nav-links">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               end={item.to === "/"}
-              className={({ isActive }) => (isActive ? "sidebar__link is-active" : "sidebar__link")}
+              className={({ isActive }) =>
+                isActive ? "nav-bubble-link is-active" : "nav-bubble-link"
+              }
             >
               {item.label}
             </NavLink>
           ))}
+          <div className="nav-divider" />
+          <ThemeToggle />
         </nav>
-        <div className="sidebar__footer">
-          <p>Offline-ready local cache</p>
-          <strong>{scopeLabel}</strong>
-          <span className="sidebar__timestamp">Saved {new Date(lastSavedAt).toLocaleString()}</span>
-          <button className="button-secondary sidebar__reset" type="button" onClick={resetOfflineData}>
-            Reset local demo data
-          </button>
-        </div>
-      </aside>
+      </header>
+
       <main className="content-area">
-        <motion.div
-          className="hero-strip"
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-        >
-          <div className="hero-strip__copy">
-            <span className="hero-strip__eyebrow">Portfolio operations cockpit</span>
-            <h2>Ginger Cafe and Coco Cabana performance, costs, menus, and labor in one mobile-ready surface.</h2>
-          </div>
-          <ScopeControls />
-        </motion.div>
         <Outlet />
       </main>
     </div>

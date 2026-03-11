@@ -234,6 +234,14 @@ export const mockData: AppData = {
       recurring: false,
     },
   ],
+  expenseBudgets: [
+    { id: "budget-coffee", businessId: "biz-ginger", locationId: "all", categoryId: "exp-coffee", period: "monthly", amount: 4200 },
+    { id: "budget-produce", businessId: "biz-ginger", locationId: "all", categoryId: "exp-produce", period: "monthly", amount: 3800 },
+    { id: "budget-protein", businessId: "biz-coco", locationId: "all", categoryId: "exp-protein", period: "monthly", amount: 9800 },
+    { id: "budget-rent", businessId: "all", locationId: "all", categoryId: "exp-rent", period: "monthly", amount: 7200 },
+    { id: "budget-marketing", businessId: "all", locationId: "all", categoryId: "exp-marketing", period: "monthly", amount: 2600 },
+    { id: "budget-cleaning", businessId: "all", locationId: "all", categoryId: "exp-cleaning", period: "monthly", amount: 1200 }
+  ],
   purchases: [
     {
       id: "purchase-001",
@@ -327,15 +335,23 @@ export const mockData: AppData = {
     { id: "ing-passionfruit", businessId: "biz-coco", name: "Passionfruit puree", baseUnit: "oz", packUnit: "bottle", unitsPerPack: 33, yieldPercent: 1, parLevel: 20 }
   ],
   vendorPriceHistory: [
+    { id: "price-000", vendorId: "vendor-roast", ingredientId: "ing-espresso", locationId: "loc-ginger-uptown", pricePerPack: 149, recordedOn: "2026-02-24" },
     { id: "price-001", vendorId: "vendor-roast", ingredientId: "ing-espresso", locationId: "loc-ginger-uptown", pricePerPack: 155, recordedOn: "2026-03-02" },
+    { id: "price-001a", vendorId: "vendor-dairy", ingredientId: "ing-oatmilk", locationId: "loc-ginger-riverside", pricePerPack: 106, recordedOn: "2026-02-25" },
     { id: "price-002", vendorId: "vendor-dairy", ingredientId: "ing-oatmilk", locationId: "loc-ginger-riverside", pricePerPack: 112, recordedOn: "2026-03-02" },
+    { id: "price-002a", vendorId: "vendor-garden", ingredientId: "ing-avocado", pricePerPack: 49, recordedOn: "2026-02-26" },
     { id: "price-003", vendorId: "vendor-garden", ingredientId: "ing-avocado", pricePerPack: 54, recordedOn: "2026-03-03" },
     { id: "price-004", vendorId: "vendor-garden", ingredientId: "ing-sourdough", pricePerPack: 26, recordedOn: "2026-03-03" },
     { id: "price-005", vendorId: "vendor-dairy", ingredientId: "ing-ginger-syrup", pricePerPack: 18, recordedOn: "2026-03-03" },
+    { id: "price-005a", vendorId: "vendor-tide", ingredientId: "ing-shrimp", locationId: "loc-coco-bayside", pricePerPack: 129, recordedOn: "2026-02-26" },
     { id: "price-006", vendorId: "vendor-tide", ingredientId: "ing-shrimp", locationId: "loc-coco-bayside", pricePerPack: 138, recordedOn: "2026-03-03" },
+    { id: "price-006a", vendorId: "vendor-tide", ingredientId: "ing-jerk-chicken", locationId: "loc-coco-midtown", pricePerPack: 141, recordedOn: "2026-02-26" },
     { id: "price-007", vendorId: "vendor-tide", ingredientId: "ing-jerk-chicken", locationId: "loc-coco-midtown", pricePerPack: 146, recordedOn: "2026-03-03" },
+    { id: "price-007a", vendorId: "vendor-garden", ingredientId: "ing-mango-salsa", pricePerPack: 38, recordedOn: "2026-02-27" },
     { id: "price-008", vendorId: "vendor-garden", ingredientId: "ing-mango-salsa", pricePerPack: 42, recordedOn: "2026-03-03" },
+    { id: "price-008a", vendorId: "vendor-garden", ingredientId: "ing-rice", pricePerPack: 36, recordedOn: "2026-02-27" },
     { id: "price-009", vendorId: "vendor-garden", ingredientId: "ing-rice", pricePerPack: 38, recordedOn: "2026-03-03" },
+    { id: "price-009a", vendorId: "vendor-dairy", ingredientId: "ing-passionfruit", pricePerPack: 26, recordedOn: "2026-02-28" },
     { id: "price-010", vendorId: "vendor-dairy", ingredientId: "ing-passionfruit", pricePerPack: 29, recordedOn: "2026-03-03" }
   ],
   inventoryCounts: [
@@ -439,5 +455,170 @@ export const mockData: AppData = {
     { id: "sales-018", businessId: "biz-coco", locationId: "loc-coco-midtown", date: "2026-03-03", revenue: 15210, cogs: 4170, labor: 4280 },
     { id: "sales-019", businessId: "biz-coco", locationId: "loc-coco-midtown", date: "2026-03-04", revenue: 15980, cogs: 4290, labor: 4430 },
     { id: "sales-020", businessId: "biz-coco", locationId: "loc-coco-midtown", date: "2026-03-05", revenue: 16380, cogs: 4380, labor: 4510 }
+  ],
+  performanceTargets: [
+    {
+      id: "target-portfolio",
+      businessId: "all",
+      locationId: "all",
+      label: "Portfolio owner baseline",
+      foodCostPercentTarget: 29,
+      laborPercentTarget: 29,
+      primeCostPercentTarget: 58,
+      wasteCostTarget: 45,
+      salesPerLaborHourTarget: 72,
+      revenueGrowthPercentTarget: 6
+    },
+    {
+      id: "target-ginger",
+      businessId: "biz-ginger",
+      locationId: "all",
+      label: "Ginger concept target",
+      foodCostPercentTarget: 28,
+      laborPercentTarget: 28,
+      primeCostPercentTarget: 56,
+      wasteCostTarget: 35,
+      salesPerLaborHourTarget: 74,
+      revenueGrowthPercentTarget: 7
+    },
+    {
+      id: "target-bayside",
+      businessId: "biz-coco",
+      locationId: "loc-coco-bayside",
+      label: "Bayside stretch target",
+      foodCostPercentTarget: 27,
+      laborPercentTarget: 28,
+      primeCostPercentTarget: 55,
+      wasteCostTarget: 40,
+      salesPerLaborHourTarget: 76,
+      revenueGrowthPercentTarget: 8
+    }
+  ],
+  salesForecasts: [
+    { id: "forecast-001", businessId: "biz-ginger", locationId: "loc-ginger-uptown", date: "2026-03-06", projectedRevenue: 10380, projectedCovers: 232, projectedLaborHours: 137 },
+    { id: "forecast-002", businessId: "biz-ginger", locationId: "loc-ginger-riverside", date: "2026-03-06", projectedRevenue: 8840, projectedCovers: 204, projectedLaborHours: 123 },
+    { id: "forecast-003", businessId: "biz-coco", locationId: "loc-coco-bayside", date: "2026-03-06", projectedRevenue: 19850, projectedCovers: 426, projectedLaborHours: 248 },
+    { id: "forecast-004", businessId: "biz-coco", locationId: "loc-coco-midtown", date: "2026-03-06", projectedRevenue: 16840, projectedCovers: 360, projectedLaborHours: 216 },
+    { id: "forecast-005", businessId: "biz-coco", locationId: "loc-coco-bayside", date: "2026-03-07", projectedRevenue: 20520, projectedCovers: 438, projectedLaborHours: 252 }
+  ],
+  marketingCampaigns: [
+    {
+      id: "campaign-001",
+      businessId: "biz-coco",
+      locationId: "loc-coco-midtown",
+      startDate: "2026-02-28",
+      endDate: "2026-03-06",
+      channel: "Instagram",
+      campaignName: "Patio launch reels",
+      spend: 1200,
+      attributedRevenue: 4180,
+      leads: 92,
+      conversions: 26
+    },
+    {
+      id: "campaign-002",
+      businessId: "biz-ginger",
+      locationId: "loc-ginger-uptown",
+      startDate: "2026-02-26",
+      endDate: "2026-03-05",
+      channel: "Email",
+      campaignName: "Brunch loyalty push",
+      spend: 480,
+      attributedRevenue: 2520,
+      leads: 68,
+      conversions: 31
+    },
+    {
+      id: "campaign-003",
+      businessId: "biz-coco",
+      locationId: "loc-coco-bayside",
+      startDate: "2026-03-01",
+      endDate: "2026-03-05",
+      channel: "Local ads",
+      campaignName: "Weekend seafood special",
+      spend: 900,
+      attributedRevenue: 1710,
+      leads: 74,
+      conversions: 11
+    }
+  ],
+  purchaseOrderDrafts: [
+    {
+      id: "po-001",
+      businessId: "biz-coco",
+      locationId: "loc-coco-bayside",
+      vendorId: "vendor-tide",
+      status: "draft",
+      createdOn: "2026-03-05",
+      items: [
+        { ingredientId: "ing-shrimp", suggestedUnits: 28, unitCost: 1.6, totalCost: 44.8 }
+      ],
+      estimatedCost: 44.8
+    }
+  ],
+  cateringLeads: [
+    {
+      id: "catering-001",
+      businessId: "biz-coco",
+      locationId: "loc-coco-bayside",
+      eventDate: "2026-03-20",
+      client: "TechCorp Annual Retreat",
+      guestCount: 150,
+      status: "confirmed",
+      quotedValue: 4500,
+      depositStatus: "paid"
+    },
+    {
+      id: "catering-002",
+      businessId: "biz-coco",
+      locationId: "loc-coco-midtown",
+      eventDate: "2026-03-24",
+      client: "Smith Wedding",
+      guestCount: 200,
+      status: "quoted",
+      quotedValue: 8200,
+      depositStatus: "pending"
+    },
+    {
+      id: "catering-003",
+      businessId: "biz-ginger",
+      locationId: "loc-ginger-riverside",
+      eventDate: "2026-03-27",
+      client: "Chamber Breakfast",
+      guestCount: 80,
+      status: "lead",
+      quotedValue: 1550,
+      depositStatus: "none"
+    }
+  ],
+  managerReports: [
+    {
+      id: "report-001",
+      interval: "daily",
+      businessId: "biz-coco",
+      locationId: "loc-coco-bayside",
+      startDate: "2026-03-05",
+      endDate: "2026-03-05",
+      authorLabel: "Bayside GM",
+      summary: "Busy dinner service with strong seafood mix and patio utilization above plan.",
+      wins: "Average ticket grew on cocktail pairings and patio seat turns improved.",
+      issues: "Shrimp inventory tightened late evening and prep handoff lagged by 15 minutes.",
+      followUps: "Revisit shrimp par and tighten opening prep checklist.",
+      flags: ["inventory", "labor"]
+    },
+    {
+      id: "report-002",
+      interval: "weekly",
+      businessId: "biz-ginger",
+      locationId: "loc-ginger-uptown",
+      startDate: "2026-03-01",
+      endDate: "2026-03-07",
+      authorLabel: "Ginger ops lead",
+      summary: "Labor landed close to plan and brunch attach rate improved on pastry bundles.",
+      wins: "Email campaign drove repeat brunch traffic and espresso waste dropped week over week.",
+      issues: "Avocado variance stayed high and one utility charge posted above expected run rate.",
+      followUps: "Test revised prep pars and review produce receiving checks with AM shift.",
+      flags: ["waste", "expense"]
+    }
   ]
 };
